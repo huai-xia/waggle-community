@@ -1,0 +1,33 @@
+name: Close source PRs
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize]
+permissions:
+  pull-requests: write
+jobs:
+  close:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Comment and close
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = [
+              '感谢关注。',
+              '',
+              '本仓是 **公开社区入口**（Issue / Star），**不接受源码 Pull Request**——产品代码在私人仓库，外人无法基于源码改。',
+              '',
+              '请改开 [Issue](https://github.com/huai-xia/waggle-community/issues/new/choose)；文档类小改也可在 Issue 里说明，由维护者代为更新。',
+            ].join('\n');
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body,
+            });
+            await github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              state: 'closed',
+            });

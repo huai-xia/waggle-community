@@ -1,0 +1,25 @@
+name: 建议 / 许愿
+description: 小改动或想要的新功能
+title: "[idea] "
+labels: ["idea"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 想解决什么问题
+      description: 现在怎样不方便，你希望怎样
+    validations:
+      required: true
+  - type: textarea
+    id: want
+    attributes:
+      label: 你觉得可以怎么做（可选）
+    validations:
+      required: false
+  - type: textarea
+    id: extra
+    attributes:
+      label: 其他
+      description: 不要贴简历、密码、隐私信息
+    validations:
+      required: false
